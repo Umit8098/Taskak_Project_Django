@@ -459,6 +459,63 @@ LOGGING = {
 - Herhangi bir hatada veya server ın nasıl çalıştığını izleyebilmek için, bu logları tutuyoruz. Bu loglardaki trafiği takip ederek bazı kararlar alabiliyoruz. Mesela bir endpoint e bir çok istek var, demekki birisi birşeyler deniyor.
 - Burada önemli olan husus logları hangi seviyede tutacağız?, neleri handle edeceğiz?, handle ediyorsak nerede saklayacağız? bunları belirtiyoruz.
 
+#### BRD -> business requirement document;
+  - Projenin tüm isterlerini, özelliklerini, gereklerini yazdığımız doküman. Projedeki ana kaynak. 
+  - Projeye başlamadan önce dizayn kısmında, tasarım kısmında hazırlanır.
+  - Software Development Life Cycle (SDLC) İlk aşama gerekliliklerin toplanması, projenin dizayn edilmesi, kurgulanması, isterlerin biraraya getirilmesi.
+  - Poje ile ilgili herşey yazar, projenin imkan/özellikleri, hangi tip kullanıcılar olacak?, normal user/admin/başka roller, her kullanıcı rolü için yetkiler, bu dokümanda bulunur.
+  
+- Projeye başlanacağı zaman Agile kavramından hatırlarsanız proje isterlerinin hepsi task olarak product backlog lara alınıyor. Daha sonra sprintler halinde sprint backlog lara gerekli task lar halinde atılıyor, ve ilgili developer lara assign ediliyor. Böyle devam ediliyor.
+- Bir projeye başlarken bu kısımlara zaman ayırıp en ince detayına kadar planlanıp, belirlenmesi gerekiyor.
+
+#### ERD -> Entity Relationship Diagram
+  - db tablolarını şekillendirmek, bir diyagrama dökmek. 
+
+#### Swagger -> Document + Test (swagger->ortam, redoc->dokuman)
+  - çok kullanılan bir tool, yazdığımız backend api, bunu frontend de bizim takım arkadaşlarımız da kullanabilir, veya dışarıya da servis edebiliriz. Bunun için yani servisin nasıl kullanılacağına dair bir klavuz hazırlanması gerekir.
+  - end pointler için doküman oluşturur
+  - swagger->ortam, redoc->document
+  - Nasıl ekleniyor? ->
+    - pip install drf-yasg şeklinde install ettikten sonra, drf_yasg ile third party package ile ekledik,
+    - main urls.py da schema_view ve endpointlerini ekledik.
+
+#### Debug_Toolbar -> Documentation 
+- Development aşamasında projemizi geliştirirken bize ekstra kabiliyetler kazandırıyor.
+- Nasıl ekleniyor? ->
+    - pip install django-debug-toolbar şeklinde install ettikten sonra, drf_toolbar ile third party package ile ekledik, daha sonra dev settings ayarlarına aldık.
+    - sonra MIDDLEWARE e en üst kısma "debug_toolbar.middleware.DebugToolbarMiddleware" ekledik, daha sonra dev settings ayarlarına aldık.
+    - sonra INTERNAL_IPS a da ayarını ekledik, daha sonra dev settings ayarlarına aldık.
+    - urls.py da bir de debug_toolbar ın   path('__debug__/', include('debug_toolbar.urls')),     şeklinde bir endpointi var, onu ekliyoruz.
+    - En son migrate komutunu çalıştırdık.
+
+#### Logger -> işlem geçmişimizi tutmaya yarayan kullanışlı bir tool.
+- settings.py da en alta ekledik, ardından base.py dosyasına aktardık.
+- Bu bir şablon şeklinde, tekrardan yazmıyoruz, bu şekilde kullanıyoruz. 
+  - En alttan başlıyoruz bakmaya,  
+  - loggers da handlers kısmında loglarımızı hem console a yazdır, hem de file oluştur demişiz.
+  
+  - level kısmına INFO demişiz, hangi level de tutabileceğini belirleyebiliyoruz.
+  ( DEBUG: Low level system information for debugging purposes
+    INFO: General system information
+    WARNING: Information describing a minor problem that has occurred.
+    ERROR: Information describing a major problem that has occurred.
+    CRITICAL: Information describing a critical problem that has occurred.)
+
+  - belirttiğimiz console ve file ayarlarını da hemen üstte handlers ta configüre ediyoruz, console a yazarken ki ayarlar, file a yazarkenki ayarlar.. Dikkat edilmesi gereken formatter kısmı -> 
+    - console da standart, 
+    - file da verbose demişiz.
+  
+  - formatter a da bir yukarıda bakıyoruz, standart, verbose, simple ile yani logların hangi formatta nasıl tutulacağını burada belirliyoruz.
+  - belirlediğimiz formatları aşağıda handlers kısmında seçebiliyoruz, handlers ları da bir alttaki loggers kısımda seçebiliyoruz, ikisini de seçmişiz ayrıca  logger seviyesini de level ile seçebiliyoruz.(level ı config ile .env ye aktarabiliriz. Buradan env ortamını değiştirebildiğimiz gibi debug level ını da değiştirebiliriz.)
+
+
+#### postgreSQL
+- pgAdmin de bir db oluşturup, 
+- oluşturduğumuz db ayarlarını prod.py kısmına yazıyoruz,
+- gizlenmesi gereken verileri config ile .env ye aktarıyoruz.
+
+
+- base(ortak ayarlar), dev(development ayarları), prod(production ayarları)
 
 
 
